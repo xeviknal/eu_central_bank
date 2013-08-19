@@ -74,6 +74,10 @@ class EuCentralBank < Money::Bank::VariableExchange
     @last_updated = Time.now
   end
 
+  def rate_key_for(from, to)
+    "currency::#{super}"
+  end
+
   def get_rate(from, to)
     @mutex.synchronize do
       rate = Redis.new.get(rate_key_for(from,to))
